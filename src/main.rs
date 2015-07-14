@@ -1,8 +1,8 @@
-use states::{Context, GameContext};
-mod states;
+use app::context::*;
+pub mod app;
 
 fn main() {
-  let mut ctx = states::GameContext::new();
+  let mut ctx = app::context::AppContext::new();
 
   loop {
     if !ctx.update() {

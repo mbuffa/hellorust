@@ -1,27 +1,18 @@
-mod initializing;
-mod playing;
+use super::state::AppState;
+use super::states::*;
+use super::event::AppEvent;
 
-pub enum Event {
-  Play,
-  Quit
+pub struct AppContext {
+  current: AppState,
+  update_fn: Option<fn(&mut AppContext) -> ()>,
+  on_enter_fn: Option<fn(&mut AppContext) -> ()>,
+  on_leave_fn: Option<fn(&mut AppContext) -> ()>
 }
 
-pub enum GameState {
-  Initializing,
-  Playing
-}
-
-pub struct GameContext {
-  current: GameState,
-  update_fn: Option<fn(&mut GameContext) -> ()>,
-  on_enter_fn: Option<fn(&mut GameContext) -> ()>,
-  on_leave_fn: Option<fn(&mut GameContext) -> ()>
-}
-
-impl GameContext {
-  pub fn new() -> GameContext {
-    let mut ctx = GameContext {
-      current: GameState::Initializing,
+impl AppContext {
+  pub fn new() -> AppContext {
+    let mut ctx = AppContext {
+      current: AppState::Initializing,
       update_fn: Some(initializing::update),
       on_enter_fn: Some(initializing::on_enter),
       on_leave_fn: Some(initializing::on_leave)
@@ -37,10 +28,10 @@ impl GameContext {
 
 pub trait Context {
   fn update(&mut self) -> bool;
-  fn trigger(&mut self, event: Event);
+  fn trigger(&mut self, event: AppEvent);
 }
 
-impl Context for GameContext {
+impl Context for AppContext {
   fn update(&mut self) -> bool {
     match self.update_fn {
       None => { false },
@@ -51,9 +42,9 @@ impl Context for GameContext {
     }
   }
 
-  fn trigger(&mut self, event: Event) {
+  fn trigger(&mut self, event: AppEvent) {
     match event {
-      Event::Play => {
+      AppEvent::Play => {
         match self.on_leave_fn {
           None => {},
           _ => {
@@ -61,14 +52,14 @@ impl Context for GameContext {
           }
         }
 
-        self.current = GameState::Playing;
+        self.current = AppState::Playing;
         self.update_fn = Some(playing::update);
         self.on_enter_fn = Some(playing::on_enter);
         self.on_leave_fn = Some(playing::on_leave);
 
         (self.on_enter_fn.unwrap())(self);
       },
-      Event::Quit => {
+      AppEvent::Quit => {
         self.update_fn = None;
       }
     }
