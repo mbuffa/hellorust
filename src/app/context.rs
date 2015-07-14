@@ -2,8 +2,11 @@ use super::state::AppState;
 use super::states::*;
 use super::event::AppEvent;
 
+use game::managers::master;
+
 pub struct AppContext {
   current: AppState,
+  master: master::Master,
   update_fn: Option<fn(&mut AppContext) -> ()>,
   on_enter_fn: Option<fn(&mut AppContext) -> ()>,
   on_leave_fn: Option<fn(&mut AppContext) -> ()>
@@ -13,6 +16,7 @@ impl AppContext {
   pub fn new() -> AppContext {
     let mut ctx = AppContext {
       current: AppState::Initializing,
+      master: master::Master::new(),
       update_fn: Some(initializing::update),
       on_enter_fn: Some(initializing::on_enter),
       on_leave_fn: Some(initializing::on_leave)
@@ -21,8 +25,8 @@ impl AppContext {
     ctx
   }
 
-  pub fn do_stuff(&mut self) {
-    println!("Doin' stuff!");
+  pub fn update_game(&mut self) {
+    self.master.update();
   }
 }
 

@@ -1,3 +1,6 @@
+use game::managers::master;
+pub mod game;
+
 use app::context::*;
 pub mod app;
 

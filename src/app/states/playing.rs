@@ -3,7 +3,8 @@ use app::event::AppEvent;
 
 pub fn update(ctx: &mut AppContext) {
   println!("Calling Update from play function.");
-  ctx.do_stuff();
+
+  ctx.update_game();
 
   ctx.trigger(AppEvent::Quit);
 }
