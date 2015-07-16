@@ -1,17 +1,37 @@
 use super::super::components::component::Component;
 
-pub struct Unit {
+pub struct ConcreteUnit {
   x: u8,
-  z: u8,
-  components: Vec<Box<Component>>
+  z: u8
+}
+
+impl ConcreteUnit {
+  pub fn new(x: u8, z: u8) -> ConcreteUnit {
+    ConcreteUnit {
+      x: x,
+      z: z
+    }
+  }
+
+  pub fn move_to(&mut self, x: i8, z: i8) -> (u8, u8) {
+    if (x < 0) { self.x -= -x as u8; } else { self.x += x as u8; }
+    if (z < 0) { self.z -= -z as u8; } else { self.z += z as u8; }
+    (self.x, self.z)
+  }
+}
+
+
+
+pub struct Unit {
+  components: Vec<Box<Component>>,
+  concrete: ConcreteUnit
 }
 
 impl Unit {
   pub fn new(x: u8, z: u8) -> Unit {
     Unit {
-      x: x,
-      z: z,
-      components: Vec::new()
+      components: Vec::new(),
+      concrete: ConcreteUnit::new(x, z)
     }
   }
 
@@ -24,9 +44,8 @@ impl Unit {
   }
 
   pub fn update(&mut self) {
-    // FIXME: Broken code?
-    // for component in self.components.iter_mut() {
-    //   (*component).update(self);
-    // }
+    for component in self.components.iter_mut() {
+      (*component).update(&mut self.concrete);
+    }
   }
 }

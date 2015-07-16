@@ -1,5 +1,5 @@
-use super::super::entities::unit::Unit;
+use super::super::entities::unit::ConcreteUnit;
 
 pub trait Component {
-  fn update(&mut self, unit: &mut Unit);
+  fn update(&mut self, unit: &mut ConcreteUnit);
 }
