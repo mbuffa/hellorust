@@ -1,3 +1,3 @@
-pub mod entities;
+pub mod objects;
 pub mod managers;
 pub mod components;

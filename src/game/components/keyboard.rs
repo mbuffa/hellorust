@@ -1,4 +1,4 @@
-use super::super::entities::unit::ConcreteUnit;
+use super::super::objects::entity::ConcreteEntity;
 use super::component::Component;
 
 pub struct KeyboardController;
@@ -8,7 +8,7 @@ impl KeyboardController {
 }
 
 impl Component for KeyboardController {
-  fn update(&mut self, unit: &mut ConcreteUnit) {
+  fn update(&mut self, entity: &mut ConcreteEntity) {
     // Put some real controller code here.
 
   }

@@ -1,13 +1,13 @@
 use super::super::components::component::Component;
 
-pub struct ConcreteUnit {
+pub struct ConcreteEntity {
   x: u8,
   z: u8
 }
 
-impl ConcreteUnit {
-  pub fn new(x: u8, z: u8) -> ConcreteUnit {
-    ConcreteUnit {
+impl ConcreteEntity {
+  pub fn new(x: u8, z: u8) -> ConcreteEntity {
+    ConcreteEntity {
       x: x,
       z: z
     }
@@ -22,16 +22,16 @@ impl ConcreteUnit {
 
 
 
-pub struct Unit {
+pub struct Entity {
   components: Vec<Box<Component>>,
-  concrete: ConcreteUnit
+  concrete: ConcreteEntity
 }
 
-impl Unit {
-  pub fn new(x: u8, z: u8) -> Unit {
-    Unit {
+impl Entity {
+  pub fn new(x: u8, z: u8) -> Entity {
+    Entity {
       components: Vec::new(),
-      concrete: ConcreteUnit::new(x, z)
+      concrete: ConcreteEntity::new(x, z)
     }
   }
 
@@ -50,13 +50,14 @@ impl Unit {
   }
 }
 
+
+
 #[test]
 fn sequential_moves() {
-  let mut unit = Unit::new(0, 0);
-  unit.concrete.move_to(5, 2);
-  unit.concrete.move_to(-3, -1);
-  let (mut x, mut z) = unit.concrete.move_to(1, 10);
+  let mut entity = Entity::new(0, 0);
+  entity.concrete.move_to(5, 2);
+  entity.concrete.move_to(-3, -1);
+  let (mut x, mut z) = entity.concrete.move_to(1, 10);
   assert_eq!(x, 3);
   assert_eq!(z, 11);
 }
-
