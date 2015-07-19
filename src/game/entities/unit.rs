@@ -49,3 +49,14 @@ impl Unit {
     }
   }
 }
+
+#[test]
+fn sequential_moves() {
+  let mut unit = Unit::new(0, 0);
+  unit.concrete.move_to(5, 2);
+  unit.concrete.move_to(-3, -1);
+  let (mut x, mut z) = unit.concrete.move_to(1, 10);
+  assert_eq!(x, 3);
+  assert_eq!(z, 11);
+}
+

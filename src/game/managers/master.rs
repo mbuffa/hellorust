@@ -23,8 +23,6 @@ impl Master {
 
   pub fn update(&mut self) {
     println!("Game Master Updating.");
-    println!("Initialized? {}", self.map.is_initialized());
-    println!("Walkable? {}", self.map.tile_at(1, 1).is_walkable());
 
     for unit in self.units.iter_mut() {
       unit.update();

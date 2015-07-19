@@ -53,3 +53,9 @@ fn map_right_size() {
   assert_eq!(map.width, 5);
   assert_eq!(map.depth, 21);
 }
+
+#[test]
+fn defaults_walkable_tiles() {
+  let map = Map::new(16, 16);
+  assert_eq!(map.tile_at(1, 1).is_walkable(), true);
+}
