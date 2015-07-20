@@ -3,3 +3,6 @@ name = "hellorust"
 version = "0.1.0"
 authors = ["Maxime Buffa <mbuffa@gmail.com>"]
 license = "MIT"
+
+[dependencies]
+toml   = "0.1"
