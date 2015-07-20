@@ -1,3 +1,6 @@
 target
 *.sublime-project
 *.sublime-workspace
+
+# Submodules
+data
