@@ -9,6 +9,8 @@ pub fn update(ctx: &mut AppContext) {
 
 pub fn on_enter(ctx: &mut AppContext) {
   println!("Entering init function.");
+
+  ctx.get_settings().load();
 }
 
 pub fn on_leave(ctx: &mut AppContext) {

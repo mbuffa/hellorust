@@ -1,11 +1,17 @@
 use super::state::AppState;
 use super::states::*;
 use super::event::AppEvent;
+use super::settings::Settings;
 
 use game::managers::master;
 
+
+static SETTINGS_PATH: &'static str = "data/system/settings.toml";
+
+
 pub struct AppContext {
   current: AppState,
+  settings: Settings,
   master: master::Master,
   update_fn: Option<fn(&mut AppContext) -> ()>,
   on_enter_fn: Option<fn(&mut AppContext) -> ()>,
@@ -16,6 +22,7 @@ impl AppContext {
   pub fn new() -> AppContext {
     let mut ctx = AppContext {
       current: AppState::Initializing,
+      settings: Settings::new(SETTINGS_PATH),
       master: master::Master::new(),
       update_fn: Some(initializing::update),
       on_enter_fn: Some(initializing::on_enter),
@@ -27,6 +34,10 @@ impl AppContext {
 
   pub fn update_game(&mut self) {
     self.master.update();
+  }
+
+  pub fn get_settings(&mut self) -> &mut Settings {
+    &mut self.settings
   }
 }
 
