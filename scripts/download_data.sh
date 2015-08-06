@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-CWD=$(basename `pwd`)
+CWD=$(basename "$(pwd)")
 
 WARN=$(cat << _EOF_
 Please execute this at the root of this git repository:
@@ -9,7 +9,7 @@ Usage:
 _EOF_
 )
 
-if [ "$CWD" == "scripts" ]
+if [ "$CWD" = "scripts" ]
 then
   echo "$WARN"
   exit 1
@@ -20,5 +20,5 @@ mkdir -p target/debug target/release
 ln -s ../../data target/debug/data
 ln -s ../../data target/release/data
 git submodule init
-cd data
+cd data || edit
 git pull
